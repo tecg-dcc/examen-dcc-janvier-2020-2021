@@ -25,6 +25,7 @@ const ticTacToe = {
         this.initGameBoard();
         this.addEventListeners();
         this.displayTime();
+        this.listContainerElement.className = 'grid ' + this.players[this.currentPlayerIdx].name;
     }, formatTime() {
         const minutes = Math.trunc(this.remainingTime / 60);
         const seconds = this.remainingTime % 60;
@@ -42,18 +43,29 @@ const ticTacToe = {
         if (this.intervalId === null) {
             this.intervalId = setInterval(this.updateTime.bind(this), 1000);
         }
-    }, play(evt) {
-        this.startTimer();
-        const currentPlayer = this.players[this.currentPlayerIdx];
-        const currentScoreItem = this.resultElements[this.currentPlayerIdx];
-        evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
-
-        currentScoreItem.textContent = currentScoreItem.dataset.name + (++currentPlayer.score);
-
+    }, nextPlayer() {
         this.currentPlayerIdx++;
         if (this.currentPlayerIdx === this.players.length) {
             this.currentPlayerIdx = 0;
         }
+    }, updateScore(currentPlayer) {
+        const currentScoreItem = this.resultElements[this.currentPlayerIdx];
+        currentScoreItem.textContent = currentScoreItem.dataset.name + (++currentPlayer.score);
+    }, displayCard(evt, currentPlayer) {
+        evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
+
+
+    }, play(evt) {
+        this.startTimer();
+        const currentPlayer = this.players[this.currentPlayerIdx];
+
+        this.displayCard(evt, currentPlayer);
+
+        this.updateScore(currentPlayer);
+
+        this.nextPlayer();
+
+        this.listContainerElement.className = 'grid ' + this.players[this.currentPlayerIdx].name;
 
     }, addEventListeners() {
         document.querySelectorAll(s.listItemSelector).forEach((listItem) => {
