@@ -42,7 +42,8 @@ const ticTacToe = {
     }, displayTime() {
         this.timerElement.textContent = this.formatTime();
     }, displayGameOverForm() {
-        const lostForm = document.querySelector(s.lostFormTemplateSelector).content;
+        const lostForm = document.querySelector(s.lostFormTemplateSelector).content.cloneNode(true);
+
         document.body.appendChild(lostForm);
     }, updateTime() {
         this.remainingTime--;
@@ -50,7 +51,6 @@ const ticTacToe = {
             clearInterval(this.intervalId);
             this.displayGameOverForm();
             document.querySelector(s.playAgainFormSelector).addEventListener('submit', this.resetForm.bind(this));
-
         }
         this.displayTime();
     }, startTimer() {
@@ -115,21 +115,16 @@ const ticTacToe = {
             this.checkItemsByIdx(0, 1, 2)
             ||
             this.checkItemsByIdx(3, 4, 5)
-
             ||
             this.checkItemsByIdx(6, 7, 8)
-
             ||
             this.checkItemsByIdx(0, 3, 6)
-
             ||
             this.checkItemsByIdx(1, 4, 7)
-
             ||
             this.checkItemsByIdx(2, 5, 8)
             ||
             this.checkItemsByIdx(0, 4, 8)
-
             ||
             this.checkItemsByIdx(2, 4, 6)
 
@@ -142,7 +137,6 @@ const ticTacToe = {
             clearInterval(this.intervalId);
 
         }
-
         console.log(this.gridItems);
     }
 };

@@ -1,6 +1,6 @@
 export const settings = {
     jsClass: 'js-enabled', // in seconds
-    maxTime: 100, jsName: 'js', loveName: 'love',
+    maxTime: 3, jsName: 'js', loveName: 'love',
     resultItemSelector: '.result_item',
     noJsMessageSelector: '.no-js__message',
     listContainerId: 'app',
