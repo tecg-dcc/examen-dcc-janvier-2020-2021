@@ -6,5 +6,7 @@ export const settings = {
     listContainerId: 'app',
     maxItemElements: 9,
     listItemHTML: '<li class="grid__item"></li>',
-    timerSelector: '.timer'
+    timerSelector: '.timer',
+    listItemSelector: '.grid__item',
+    listItemPrefix: 'grid__item--'
 };

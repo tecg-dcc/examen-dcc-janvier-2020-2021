@@ -7,8 +7,9 @@ const ticTacToe = {
         document.querySelector(s.noJsMessageSelector).remove();
     }, initData() {
         this.players = [new Player(s.jsName), new Player(s.loveName)];
-        this.currentPlayer = 0;
+        this.currentPlayerIdx = 0;
         this.remainingTime = s.maxTime;
+        this.intervalId = null;
     }, initGameBoard() {
         for (let i = 0; i < s.maxItemElements; i++) {
             this.listContainerElement.insertAdjacentHTML('beforeend', s.listItemHTML);
@@ -22,15 +23,44 @@ const ticTacToe = {
         this.getHTMLElements();
         this.initData();
         this.initGameBoard();
-        this.displayTime()
-    },
-    formatTime() {
+        this.addEventListeners();
+        this.displayTime();
+    }, formatTime() {
         const minutes = Math.trunc(this.remainingTime / 60);
         const seconds = this.remainingTime % 60;
-        return `${minutes<10?'0':''}${minutes} : ${seconds<10?'0':''}${seconds}`;
-    },
-    displayTime() {
+        return `${minutes < 10 ? '0' : ''}${minutes} : ${seconds < 10 ? '0' : ''}${seconds}`;
+    }, displayTime() {
         this.timerElement.textContent = this.formatTime();
-    },
+    }, updateTime() {
+        this.remainingTime--;
+        if (this.remainingTime === 0) {
+            clearInterval(this.intervalId);
+            // TODO : game over...
+        }
+        this.displayTime();
+    }, startTimer() {
+        if (this.intervalId === null) {
+            this.intervalId = setInterval(this.updateTime.bind(this), 1000);
+        }
+    }, play(evt) {
+        this.startTimer();
+        const currentPlayer = this.players[this.currentPlayerIdx];
+        const currentScoreItem = this.resultElements[this.currentPlayerIdx];
+        evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
+
+        currentScoreItem.textContent = currentScoreItem.dataset.name + (++currentPlayer.score);
+
+        this.currentPlayerIdx++;
+        if (this.currentPlayerIdx === this.players.length) {
+            this.currentPlayerIdx = 0;
+        }
+
+    }, addEventListeners() {
+        document.querySelectorAll(s.listItemSelector).forEach((listItem) => {
+            listItem.addEventListener('click', (evt) => {
+                this.play(evt);
+            });
+        });
+    }
 };
 ticTacToe.init();
