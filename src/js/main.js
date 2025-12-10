@@ -136,7 +136,7 @@ const ticTacToe = {
         );
     },
     checkWinner() {
-
+        const currentPlayerName = this.players[this.currentPlayerIdx].name;
         if (this.checkAllItems()) {
             console.log('Yeah ' + currentPlayerName);
             clearInterval(this.intervalId);
