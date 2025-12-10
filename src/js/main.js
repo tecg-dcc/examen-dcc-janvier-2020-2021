@@ -25,48 +25,63 @@ const ticTacToe = {
         this.initGameBoard();
         this.addEventListeners();
         this.displayTime();
-        this.listContainerElement.className = s.gridClass + ' ' + this.players[this.currentPlayerIdx].name;
+        this.updateHoverForCurrentPlayer();
+    }, resetForm(evt) {
+        evt.preventDefault();
+        document.querySelector(s.playAgainFormSelector).remove();
+        this.resetGame();
     }, formatTime() {
         const minutes = Math.trunc(this.remainingTime / 60);
         const seconds = this.remainingTime % 60;
         return `${minutes < 10 ? '0' : ''}${minutes} : ${seconds < 10 ? '0' : ''}${seconds}`;
     }, displayTime() {
         this.timerElement.textContent = this.formatTime();
+    }, displayGameOverForm() {
+        const lostForm = document.querySelector(s.lostFormTemplateSelector).content;
+        document.body.appendChild(lostForm);
     }, updateTime() {
         this.remainingTime--;
         if (this.remainingTime === 0) {
             clearInterval(this.intervalId);
-            // TODO : game over...
+            this.displayGameOverForm();
+            document.querySelector(s.playAgainFormSelector).addEventListener('submit', this.resetForm.bind(this));
+
         }
         this.displayTime();
     }, startTimer() {
         if (this.intervalId === null) {
             this.intervalId = setInterval(this.updateTime.bind(this), 1000);
         }
-    }, nextPlayer() {
+    }, updateCurrentPlayer() {
         this.currentPlayerIdx++;
         if (this.currentPlayerIdx === this.players.length) {
             this.currentPlayerIdx = 0;
         }
-    }, updateScore(currentPlayer) {
+    }, updateScore() {
+        this.players[this.currentPlayerIdx].score++;
+    }, displayScore() {
         const currentScoreItem = this.resultElements[this.currentPlayerIdx];
-        currentScoreItem.textContent = currentScoreItem.dataset.name + (++currentPlayer.score);
-    }, displayCard(evt, currentPlayer) {
+        currentScoreItem.textContent = currentScoreItem.dataset.name + (this.players[this.currentPlayerIdx].score);
+    }, displayAllScores() {
+        for (let i = 0; i < this.players.length; i++) {
+            this.currentPlayerIdx = i;
+            this.displayScore();
+        }
+        this.currentPlayerIdx = 0;
+    }, displayCard(evt,) {
         if (evt.currentTarget.classList.length === 1) {
-            evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
+            evt.currentTarget.classList.add(s.listItemPrefix + this.players[this.currentPlayerIdx].name);
         }
 
+    }, updateHoverForCurrentPlayer() {
+        this.listContainerElement.className = s.gridClass + ' ' + this.players[this.currentPlayerIdx].name;
     }, play(evt) {
         this.startTimer();
-        const currentPlayer = this.players[this.currentPlayerIdx];
-
-        this.displayCard(evt, currentPlayer);
-
-        this.updateScore(currentPlayer);
-
-        this.nextPlayer();
-
-        this.listContainerElement.className = s.gridClass + ' ' + currentPlayer.name;
+        this.displayCard(evt);
+        this.updateScore();
+        this.displayScore();
+        this.updateCurrentPlayer();
+        this.updateHoverForCurrentPlayer();
 
     }, addEventListeners() {
         document.querySelectorAll(s.listItemSelector).forEach((listItem) => {
@@ -74,6 +89,14 @@ const ticTacToe = {
                 this.play(evt);
             });
         });
+    }, resetGame() {
+        this.initData();
+        this.displayTime();
+        this.listContainerElement.innerHTML = '';
+        this.initGameBoard();
+        this.updateHoverForCurrentPlayer();
+        this.displayAllScores();
+        this.addEventListeners();
     }
 };
 ticTacToe.init();
