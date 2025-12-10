@@ -105,6 +105,7 @@ const ticTacToe = {
         this.addEventListeners();
     },
     checkItemsByIdx(idx1, idx2, idx3) {
+        const currentPlayerName = this.players[this.currentPlayerIdx].name;
         return (this.gridItems[idx1].className.includes(currentPlayerName) &&
             this.gridItems[idx2].className.includes(currentPlayerName) &&
             this.gridItems[idx3].className.includes(currentPlayerName));
@@ -135,7 +136,7 @@ const ticTacToe = {
         );
     },
     checkWinner() {
-        const currentPlayerName = this.players[this.currentPlayerIdx].name;
+
         if (this.checkAllItems()) {
             console.log('Yeah ' + currentPlayerName);
             clearInterval(this.intervalId);
