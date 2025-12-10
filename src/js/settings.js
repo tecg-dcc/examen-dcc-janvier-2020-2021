@@ -8,5 +8,6 @@ export const settings = {
     listItemHTML: '<li class="grid__item"></li>',
     timerSelector: '.timer',
     listItemSelector: '.grid__item',
-    listItemPrefix: 'grid__item--'
+    listItemPrefix: 'grid__item--',
+    gridClass: 'grid'
 };

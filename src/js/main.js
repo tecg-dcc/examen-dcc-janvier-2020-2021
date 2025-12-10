@@ -25,7 +25,7 @@ const ticTacToe = {
         this.initGameBoard();
         this.addEventListeners();
         this.displayTime();
-        this.listContainerElement.className = 'grid ' + this.players[this.currentPlayerIdx].name;
+        this.listContainerElement.className = s.gridClass + ' ' + this.players[this.currentPlayerIdx].name;
     }, formatTime() {
         const minutes = Math.trunc(this.remainingTime / 60);
         const seconds = this.remainingTime % 60;
@@ -52,8 +52,9 @@ const ticTacToe = {
         const currentScoreItem = this.resultElements[this.currentPlayerIdx];
         currentScoreItem.textContent = currentScoreItem.dataset.name + (++currentPlayer.score);
     }, displayCard(evt, currentPlayer) {
-        evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
-
+        if (evt.currentTarget.classList.length === 1) {
+            evt.currentTarget.classList.add(s.listItemPrefix + currentPlayer.name);
+        }
 
     }, play(evt) {
         this.startTimer();
@@ -65,7 +66,7 @@ const ticTacToe = {
 
         this.nextPlayer();
 
-        this.listContainerElement.className = 'grid ' + this.players[this.currentPlayerIdx].name;
+        this.listContainerElement.className = s.gridClass + ' ' + currentPlayer.name;
 
     }, addEventListeners() {
         document.querySelectorAll(s.listItemSelector).forEach((listItem) => {
