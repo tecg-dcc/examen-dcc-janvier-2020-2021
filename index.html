@@ -9,44 +9,47 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="stylesheet" href="dist/css/style.min.css">
     <meta name="theme-color" content="#fafafa">
+    <script defer type="module" src="src/js/main.js"></script>
 </head>
 
 <body class="container">
-<p class="no-js__message">
-    Pour accéder à toutes les fonctionnalités de ce site, vous devez activer JavaScript.
-    Voici les <a href="https://www.enable-javascript.com/fr/">
-    instructions pour activer JavaScript dans votre navigateur Web</a>.
-</p>
-    
-<h1 class="hidden">Tic Tac Toe</h1>
-<p title="Le temps qu'il vous reste" class="timer">00 : 00</p>
-<ul class="grid" id="app">
-</ul>
-<ul class="result">
-    <li class="result_item result_item--js">Joueur 1 :</li>
-    <li class="result_item result_item--love">Joueur 2 :</li>
-</ul>
-<template class="play-again-template play-again-template--lost">
-    <form class="play-again-template__form" method="get">
-        <p class="play-again-template__form__message">Le jeu est perdu</p>
-        <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
-    </form>
-</template>
+    <p class="no-js__message">
+        Pour accéder à toutes les fonctionnalités de ce site, vous devez activer JavaScript.
+        Voici les <a href="https://www.enable-javascript.com/fr/">
+        instructions pour activer JavaScript dans votre navigateur Web</a>.
+    </p>
 
-<template class="play-again-template play-again-template--js">
-    <form class="play-again-template__form" method="get">
-        <p class="play-again-template__form__message"><span
-                class="play-again-template__form__message__winner play-again-template__form__message__winner--js">js</span> a gagné !</p>
-        <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
-    </form>
-</template>
-<template class="play-again-template play-again-template--love">
-    <form class="play-again-template__form" method="get">
-        <p class="play-again-template__form__message"><span
-                class="play-again-template__form__message__winner play-again-template__form__message__winner--love">love</span> a gagné !
-        </p>
-        <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
-    </form>
-</template>
+    <h1 class="hidden">Tic Tac Toe</h1>
+    <p title="Le temps qu'il vous reste" class="timer">00 : 00</p>
+    <ul class="grid" id="app">
+    </ul>
+    <ul class="result">
+        <li class="result_item result_item--js">Joueur 1 :</li>
+        <li class="result_item result_item--love">Joueur 2 :</li>
+    </ul>
+    <template class="play-again-template play-again-template--lost">
+        <form class="play-again-template__form" method="get">
+            <p class="play-again-template__form__message">Le jeu est perdu</p>
+            <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
+        </form>
+    </template>
+
+    <template class="play-again-template play-again-template--js">
+        <form class="play-again-template__form" method="get">
+            <p class="play-again-template__form__message"><span
+                    class="play-again-template__form__message__winner play-again-template__form__message__winner--js">js</span>
+                a gagné !</p>
+            <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
+        </form>
+    </template>
+    <template class="play-again-template play-again-template--love">
+        <form class="play-again-template__form" method="get">
+            <p class="play-again-template__form__message"><span
+                    class="play-again-template__form__message__winner play-again-template__form__message__winner--love">love</span>
+                a gagné !
+            </p>
+            <input class="btn play-again-template__form__submit" type="submit" value="Jouer à nouveau !">
+        </form>
+    </template>
 </body>
 </html>
