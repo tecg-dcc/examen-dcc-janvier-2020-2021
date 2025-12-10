@@ -10,10 +10,15 @@ const ticTacToe = {
         this.currentPlayerIdx = 0;
         this.remainingTime = s.maxTime;
         this.intervalId = null;
+        this.gridItems = [];
     }, initGameBoard() {
         for (let i = 0; i < s.maxItemElements; i++) {
-            this.listContainerElement.insertAdjacentHTML('beforeend', s.listItemHTML);
+            const liElement = document.createElement('li');
+            liElement.className = s.listItemClass;
+            this.gridItems.push(liElement);
+            this.listContainerElement.insertAdjacentElement('beforeend', liElement);
         }
+
     }, getHTMLElements() {
         this.resultElements = document.querySelectorAll(s.resultItemSelector);
         this.listContainerElement = document.getElementById(s.listContainerId);
@@ -80,11 +85,12 @@ const ticTacToe = {
         this.displayCard(evt);
         this.updateScore();
         this.displayScore();
+        this.checkWinner();
         this.updateCurrentPlayer();
         this.updateHoverForCurrentPlayer();
 
     }, addEventListeners() {
-        document.querySelectorAll(s.listItemSelector).forEach((listItem) => {
+        this.gridItems.forEach((listItem) => {
             listItem.addEventListener('click', (evt) => {
                 this.play(evt);
             });
@@ -97,6 +103,46 @@ const ticTacToe = {
         this.updateHoverForCurrentPlayer();
         this.displayAllScores();
         this.addEventListeners();
+    },
+    checkItemsByIdx(idx1, idx2, idx3) {
+        return (this.gridItems[idx1].className.includes(currentPlayerName) &&
+            this.gridItems[idx2].className.includes(currentPlayerName) &&
+            this.gridItems[idx3].className.includes(currentPlayerName));
+    },
+    checkAllItems() {
+        return (
+            this.checkItemsByIdx(0, 1, 2)
+            ||
+            this.checkItemsByIdx(3, 4, 5)
+
+            ||
+            this.checkItemsByIdx(6, 7, 8)
+
+            ||
+            this.checkItemsByIdx(0, 3, 6)
+
+            ||
+            this.checkItemsByIdx(1, 4, 7)
+
+            ||
+            this.checkItemsByIdx(2, 5, 8)
+            ||
+            this.checkItemsByIdx(0, 4, 8)
+
+            ||
+            this.checkItemsByIdx(2, 4, 6)
+
+        );
+    },
+    checkWinner() {
+        const currentPlayerName = this.players[this.currentPlayerIdx].name;
+        if (this.checkAllItems()) {
+            console.log('Yeah ' + currentPlayerName);
+            clearInterval(this.intervalId);
+
+        }
+
+        console.log(this.gridItems);
     }
 };
 ticTacToe.init();
